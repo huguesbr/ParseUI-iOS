@@ -104,9 +104,14 @@ static NSString *const PFSignUpViewControllerDelegateInfoAdditionalKey = @"addit
 #pragma mark UIViewController
 
 - (void)loadView {
-    _signUpView = [[PFSignUpView alloc] initWithFields:_fields];
+    if(self.useCustomNib) {
+        [super loadView];
+        _signUpView = self.view;
+    } else {
+        _signUpView = [[PFSignUpView alloc] initWithFields:_fields];
+        self.view = _signUpView;
+    }
     _signUpView.presentingViewController = self;
-    self.view = _signUpView;
 }
 
 - (void)viewDidLoad {
